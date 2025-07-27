@@ -104,6 +104,23 @@ Correct change output
 
 System reset behavior
 
+## State Diagram
+
+graph TD
+    A[Reset / Initial State] --> B{Insert Coin};
+
+    B -- next_total < 10 --> C[Update Total];
+    C -- @(posedge clk) --> A;
+
+    B -- next_total >= 10 --> D[Dispense Product & Calculate Change];
+    D -- @(posedge clk) --> A;
+
+    subgraph Internal Logic
+        C -- Product = 0, Change = 0 --> A;
+        D -- Product = 1, Change = next_total - 10 --> A;
+    end
+
+
 ## State Table
 | Current Total (`total`) | Coin Input (`coin`) | Coin Value | New Total (`next_total`) | Product | Change | Next State (`total`) |
 | ----------------------- | ------------------- | ---------- | ------------------------ | ------- | ------ | -------------------- |

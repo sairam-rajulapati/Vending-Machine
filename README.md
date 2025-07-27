@@ -106,19 +106,7 @@ System reset behavior
 
 ## State Diagram
 
-graph TD
-    A[Reset / Initial State] --> B{Insert Coin};
-
-    B -- next_total < 10 --> C[Update Total];
-    C -- @(posedge clk) --> A;
-
-    B -- next_total >= 10 --> D[Dispense Product & Calculate Change];
-    D -- @(posedge clk) --> A;
-
-    subgraph Internal Logic
-        C -- Product = 0, Change = 0 --> A;
-        D -- Product = 1, Change = next_total - 10 --> A;
-    end
+<img width="1024" height="1024" alt="image" src="https://github.com/user-attachments/assets/dade215b-ba6e-4c84-acdc-b670c255dc07" />
 
 
 ## State Table

@@ -5,7 +5,26 @@ The vending machine accepts coins (₹1, ₹2, ₹5), accumulates the total valu
 
 ## Table of Contents
 
-1. [Introduction](#1-introduction) 
+1. [Introduction](#1-introduction)
+2. [Methodology](#2-methodology)  
+   - [Directions Considered](#directions-considered)  
+   - [Problem Statement](#problem-statement)
+   - [System Design Approach](#system-design-approach)
+   - [State Diagram](#state-diagram)  
+   - [State Table](#state-table)
+3. [RTL Code](#RTL-Code)
+   - [RTL Schematic View](#RTL-Schematic-View)
+3. [TESTBENCH](#TESTBENCH)    
+
+
+
+
+
+
+
+
+
+
 
 # 1. Introduction
 
@@ -24,13 +43,6 @@ Change return logic
 Clock-driven state updates
 
 This project is especially useful for students and learners exploring digital design, Verilog HDL, and embedded system simulation. It can also be extended for FPGA implementation or used as a foundational block for more complex vending logic.
-
-2. [Methodology](#2-methodology)  
-   - [Directions Considered](#directions-considered)  
-   - [Problem Statement](#problem-statement)
-   - [System Design Approach](#system-design-approach)
-   - [State Diagram](#state-diagram)  
-   - [State Table](#state-table)
      
 
 # 2. Methodology
@@ -124,9 +136,71 @@ System reset behavior
 | 0                       | 000 (No Coin)       | 0          | 0                        | 0       | 0      | 0                    |
 
 
-3. [RTL Code](#RTL-Code)
+
    
 # 3.RTL Code
+
+`timescale 1ns / 1ps
+
+module vending_machine (
+    input clk,
+    input reset,
+    input [2:0] coin,            // 3'b001 = ?1, 010 = ?2, 100 = ?5
+    output reg product,
+    output reg [3:0] change,
+    output reg [4:0] total_debug // for observation
+);
+
+    reg [4:0] total;          // registered state
+    reg [4:0] next_total;     // combinational next total
+    reg [4:0] coin_value;
+
+    // Coin decoding
+    always @(*) begin
+        case (coin)
+            3'b001: coin_value = 1;
+            3'b010: coin_value = 2;
+            3'b100: coin_value = 5;
+            default: coin_value = 0;
+        endcase
+    end
+
+    // Combinational logic for next_total and outputs
+    always @(*) begin
+        next_total = total + coin_value;
+
+        if (next_total >= 10) begin
+            product = 1;
+            change = next_total - 10;
+            total_debug = 0;  // reset total_debug after dispensing
+        end else begin
+            product = 0;
+            change = 0;
+            total_debug = next_total; // immediate updated total
+        end
+    end
+
+    // Sequential logic to update total on clock edge
+    always @(posedge clk or posedge reset) begin
+        if (reset) begin
+            total <= 0;
+        end else begin
+            if (next_total >= 10)
+                total <= 0;   // reset after dispensing
+            else
+                total <= next_total;
+        end
+    end
+
+endmodule
+
+# RTL Schematic View
+
+<img width="1610" height="491" alt="image" src="https://github.com/user-attachments/assets/bef72257-fc2e-4587-b713-3156b56c3502" />
+
+
+# TESTBENCH
+
 
 
 

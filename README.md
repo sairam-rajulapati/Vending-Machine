@@ -34,6 +34,7 @@ This project is especially useful for students and learners exploring digital de
      
 
 # 2. Methodology
+The vending machine was designed using a combination of combinational and sequential logic, structured in a way that mimics the behavior of a real-world vending machine. The following methodology was followed during the development of this project
 
 ## Directions Considered
 

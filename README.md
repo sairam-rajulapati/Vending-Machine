@@ -127,7 +127,7 @@ System reset behavior
 
 
    
-# 3.RTL Code
+## 3.RTL Code
 
 `timescale 1ns / 1ps
 
@@ -183,12 +183,13 @@ module vending_machine (
 
 endmodule
 
-# RTL Schematic View
+
+## RTL Schematic View
 
 <img width="1610" height="491" alt="image" src="https://github.com/user-attachments/assets/bef72257-fc2e-4587-b713-3156b56c3502" />
 
 
-# TESTBENCH
+## TESTBENCH
 
 `timescale 1ns / 1ps
 
@@ -266,7 +267,7 @@ module vending_machine_tb;
 
 endmodule
 
-# Output Waveforms
+## Output Waveforms
 
 <img width="604" height="263" alt="Screenshot 2025-07-14 223306" src="https://github.com/user-attachments/assets/a1a66f7e-0e54-405a-84dd-a2be21d28c22" />
 

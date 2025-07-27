@@ -124,4 +124,9 @@ System reset behavior
 | 0                       | 000 (No Coin)       | 0          | 0                        | 0       | 0      | 0                    |
 
 
+3. [RTL Code](#RTL-Code)
+   
+# 3.RTL Code
+
+
 
